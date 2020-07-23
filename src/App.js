@@ -1,26 +1,30 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import WinPage from "./pages/WinPage";
+import Layout from "./shared/Layout";
+import NotFound from "./pages/NotFound";
+import SimpleTestPage from "./pages/SimpleTestPage";
+import {RecoilRoot} from "recoil";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return <RecoilRoot>
+        <Router>
+            <Layout>
+                <Switch>
+                    <Route path={"/"} exact={true} component={HomePage}/>
+                    <Route path={"/start/:id?"} component={SimpleTestPage}/>
+                    <Route path={"/finish"} component={WinPage}/>
+                    <Route component={NotFound}/>
+                </Switch>
+            </Layout>
+        </Router>
+    </RecoilRoot>
 }
 
 export default App;
