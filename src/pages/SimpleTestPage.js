@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react"
-import {useHistory, useParams, useLocation, Redirect } from "react-router-dom";
+import {useHistory, useParams, useLocation, Redirect} from "react-router-dom";
 import {Button, Loader, Modal} from "semantic-ui-react";
 import {useRecoilState} from "recoil/dist";
 import {answersAtom} from "../atoms/answersAtom";
@@ -61,11 +61,9 @@ const SimpleTestPage = (props) => {
 
     }, [location])
 
-    if(id)
-    {
+    if (id) {
         return <TestPage/>
-    }
-    else{
+    } else {
         return <StartTest/>
     }
 
@@ -89,6 +87,15 @@ const TestPage = (props) => {
     const [qst, setQst] = useState(null)
     const [selected, setSelected] = useState(null)
     const [answers, setAnswers] = useRecoilState(answersAtom)
+
+    useEffect(() => {
+        if (finish) {
+            setTestTime((old) => Date.now() - old)
+        } else {
+            setTestTime((old) => Date.now())
+        }
+    }, [finish])
+
     useEffect(() => {
         if (Number(id) > QI.length)
             setFinish(true)
@@ -119,8 +126,8 @@ const TestPage = (props) => {
         ])
         history.push(`/start/${Number(id) + 1}`)
     }
+    //ss
     const getResults = () => {
-        setTestTime((old) => Date.now() - old)
         history.push("/finish")
     }
     if (finish) {
